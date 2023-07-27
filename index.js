@@ -145,6 +145,7 @@ async function run() {
       );
       res.send(result);
     });
+
     app.put("/update-total-runs/:id", async (req, res) => {
       const id = req.params.id;
       const updateProfile = req.body;
@@ -211,6 +212,31 @@ async function run() {
       const updatedDoc = {
         $set: {
           heightWickets: updateProfile.heightWickets,
+        },
+      };
+
+      const result = await playerCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
+
+
+    app.put("/edit-profile/:id", async (req, res) => {
+      const id = req.params.id;
+      const updateProfile = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          playerName: updateProfile.playerName,
+          dateOfBirth: updateProfile.dateOfBirth,
+          playerProfileImg: updateProfile.playerProfileImg,
+          playerRole: updateProfile.playerRole,
+          teamName: updateProfile.teamName,
+          aboutPlayer: updateProfile.aboutPlayer,
         },
       };
 
