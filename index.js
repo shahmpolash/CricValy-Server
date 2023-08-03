@@ -406,6 +406,28 @@ async function run() {
       );
       res.send(result);
     });
+    
+    app.put("/player-last-match/:id", async (req, res) => {
+      const id = req.params.id;
+      const updateLastMatch = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          totalMatches: updateLastMatch.totalMatches,
+          updated: updateLastMatch.updated,
+          totalRuns: updateLastMatch.totalRuns,
+          totalWickets: updateLastMatch.totalWickets
+        },
+      };
+
+      const result = await playerCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
 
     app.post("/users", async (req, res) => {
       const newUser = req.body;
