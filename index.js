@@ -126,7 +126,7 @@ async function run() {
       res.send(result);
     });
 
-    //Update Profile
+    //Update Profile//////
     app.put("/update-total-matches/:id", async (req, res) => {
       const id = req.params.id;
       const updateProfile = req.body;
@@ -222,7 +222,6 @@ async function run() {
       );
       res.send(result);
     });
-
 
     app.put("/edit-profile/:id", async (req, res) => {
       const id = req.params.id;
