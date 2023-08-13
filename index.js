@@ -122,10 +122,18 @@ async function run() {
     // Playe Profile Add
     app.post("/add-player", async (req, res) => {
       const newPlayer = req.body;
+      const playerEmail = newPlayer.playerEmail;
+    
+      // Check if a player with the same email already exists
+      const existingPlayer = await playerCollection.findOne({ playerEmail });
+      if (existingPlayer) {
+        return res.status(400).json({ message: "Player with the same email already exists" });
+      }
+    
       const result = await playerCollection.insertOne(newPlayer);
       res.send(result);
     });
-
+    
     //Update Profile//////
     app.put("/update-total-matches/:id", async (req, res) => {
       const id = req.params.id;
